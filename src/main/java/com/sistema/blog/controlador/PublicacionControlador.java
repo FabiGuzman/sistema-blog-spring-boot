@@ -1,7 +1,5 @@
 package com.sistema.blog.controlador;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sistema.blog.dto.PublicacionDTO;
+import com.sistema.blog.dto.PublicacionRespuesta;
 import com.sistema.blog.servicio.PublicacionServicio;
 
 @RestController
@@ -31,10 +30,12 @@ public class PublicacionControlador {
 	}
 
 	@GetMapping
-	public List<PublicacionDTO> listarPublicaciones(
+	public PublicacionRespuesta listarPublicaciones(
 			@RequestParam(value = "pageNo", defaultValue = "0", required = false) int numeroDePagina,
-			@RequestParam(value = "pageSize", defaultValue = "10", required = false) int medidaDePagina) {
-		return publicacionServicio.obtenerTodasLasPublicaciones(numeroDePagina,medidaDePagina);
+			@RequestParam(value = "pageSize", defaultValue = "10", required = false) int medidaDePagina,
+			@RequestParam(value = "sortBy", defaultValue="id", required=false) String ordenarPor,
+			@RequestParam(value = "sortDir", defaultValue="asc", required=false) String sortDir) {
+		return publicacionServicio.obtenerTodasLasPublicaciones(numeroDePagina,medidaDePagina,ordenarPor,sortDir);
 	}
 
 	@GetMapping("/{id}")
